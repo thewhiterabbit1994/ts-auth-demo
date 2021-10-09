@@ -4,14 +4,14 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const DB_URL: string = String(process.env.DB_URL);
+const DB_URL = process.env.DB_URL;
 
 mongoose.Promise = global.Promise;
 
 try {
-  mongoose.connect(DB_URL);
+  mongoose.connect(DB_URL!);
 } catch (err) {
-  mongoose.createConnection(DB_URL);
+  mongoose.createConnection(DB_URL!);
 }
 
 mongoose.connection
