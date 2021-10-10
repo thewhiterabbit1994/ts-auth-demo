@@ -1,4 +1,4 @@
-import express, { ErrorRequestHandler } from 'express'
+import express, { NextFunction, Request, Response } from 'express'
 
 import bodyParser from 'body-parser'
 
@@ -13,40 +13,32 @@ declare global {
   namespace Express {
     interface Request {
       ejsGlobal?: {
-        domain: string  
+        domain: string,
+        isDashboard?: boolean,
+        isLoggedIn?: boolean
       },
       user: any
     }
   }
 
-  interface userDetails {
-    _id: string,
-    iat: number
-  }
+  type EController = (req: Request, res: Response, next: NextFunction) => any
 }
 
 dotenv.config();
 
 const app = express()
 
-// app.use(bodyParser.json({ type: 'application/*+json' }))
 app.use(require('cookie-parser')())
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
-  extended: true // ba false taghi kone hatman ! BE HICH ONWAN TAGHIR NAKONE (Jixer)
+  extended: true
 }));
 app.set("view engine", "ejs")
 
 _applyMiddleWares(app)
 _applyRoutes(app)
 
-const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
-  console.log(err)
 
-  return res.send('500')
-};
-
-app.use(errorHandler)
 
 app.listen(process.env.PORT || 3000, () => console.log('app is running on localhost:3000'))

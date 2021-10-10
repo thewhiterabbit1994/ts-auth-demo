@@ -1,5 +1,3 @@
-import { EController } from '@src/lib/types'
-
 import User from '@models/user'
 
 import validateAndGetStandardPhoneNumber from '@src/lib/validate-and-get-standard-phone-number'
@@ -113,7 +111,6 @@ const POST_LogIn: EController = async (req, res, next) => {
   }
 
 }
-
 
 export default {
   POST_signUp,

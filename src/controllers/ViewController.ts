@@ -1,5 +1,3 @@
-import { EController } from '@src/lib/types'
-
 const roothandler: EController = (req, res, next) => {
   res.render('home', {
     global: req.ejsGlobal

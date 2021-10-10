@@ -10,16 +10,17 @@ const requireDashBoardAccess: EController = async (req, res, next) => {
 
     const userDetails = await decodeToken(token);
 
+    console.log('userDetails', userDetails)
+
     const user = await checkUser(userDetails)
 
-    if (!user || !user._id) throw new Error('please first sign in')
-
-    req.user = user
+    if (user && user._id) throw new Error('redirect to dashboard')
 
     next()
 
   } catch (error) {
-    res.redirect('../../../../login')
+    console.log(error)
+    res.redirect('../../../../dashboard')
   }
 
 }

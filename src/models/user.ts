@@ -21,15 +21,12 @@ interface IUser {
   _createToken: () => string
 }
 
-interface UserModel extends Model<IUser> {
+export interface UserModel extends Model<IUser> {
   _checkIfPhoneNumberExists(value: string): Promise<boolean>;
 }
 
-// const UserSchema = new Schema<IUser, UserModel>({ name: String });
-
 const UserSchema = new Schema<IUser, UserModel>({
   name: String,
-  // email: String,
   phoneNumber: String,
   loginObject: {
     code: String,
