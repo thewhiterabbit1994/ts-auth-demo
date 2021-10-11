@@ -6,21 +6,22 @@ const requireDashBoardAccess: EController = async (req, res, next) => {
   
   const token = req.cookies.uc
 
+  if (!token) next()
+
   try {
 
     const userDetails = await decodeToken(token);
 
-    console.log('userDetails', userDetails)
-
     const user = await checkUser(userDetails)
 
-    if (user && user._id) throw new Error('redirect to dashboard')
+    // if (!user || !user._id) throw new Error('go next')
+
+    if (user && user._id) return res.redirect('../../../dashboard')
 
     next()
 
   } catch (error) {
-    console.log(error)
-    res.redirect('../../../../dashboard')
+    next()
   }
 
 }
